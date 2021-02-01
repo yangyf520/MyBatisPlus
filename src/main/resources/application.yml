@@ -1,0 +1,54 @@
+spring:
+  devtools:
+    restart:
+      enabled: true
+      #设置重启的目录
+      #additional-paths: src/main/java
+      #classpath目录下的WEB-INF文件夹内容修改不重启
+      exclude: WEB-INF/**
+  profiles:
+    active: dev
+  datasource:
+    # 驱动不同
+    # mysql 5  com.mysql.jdbc.Driver
+    # mysql 8  com.mysql.cj.jdbc.Driver、需要增加时区的配置serverTimezone=GMT%2B8
+    #url: jdbc:mysql://localhost:3306/mybatis?useSSL=false&useUnicode=true&&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    # 性能分析
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/mybatis?useSSL=false&useUnicode=true&&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: pheonix
+
+    #多数据源
+#    dynamic:
+#      primary: master #设置默认的数据源或者数据源组,默认值即为master
+#      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
+#      datasource:
+#        master:
+#          url: jdbc:p6spy:mysql://localhost:3306/demo_primary?useSSL=false&useUnicode=true&&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+#          username: root
+#          password: pheonix
+#          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#        slave:
+#          url: jdbc:p6spy:mysql://localhost:3306/demo_second?useSSL=false&useUnicode=true&&characterEncoding=utf-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+#          username: root
+#          password: pheonix
+#          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+
+#mybatis-plus配置
+mybatis-plus:
+  #配置日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+    jdbc-type-for-null: 'null'
+
+  # 扫描 mapper.xml
+  mapper-locations: classpath:/mapper/*Mapper.xml
+
+  #逻辑删除
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
